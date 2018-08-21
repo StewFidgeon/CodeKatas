@@ -22,7 +22,12 @@ namespace UncleBob.BowlingGameKata
             int frameIndex = 0;
             for (var frame = 0; frame < 10; frame++)
             {
-                if (IsSpare(frameIndex))
+                if (_rolls[frameIndex] == 10) //strike
+                {
+                    _score += 10 + _rolls[frameIndex + 1] + _rolls[frameIndex + 2];
+                    frameIndex++;
+                }
+                else if (IsSpare(frameIndex))
                 {
                     _score += 10 + _rolls[frameIndex + 2];
                     frameIndex += 2;

@@ -47,6 +47,16 @@ namespace UncleBob.BowlingGameKata.Tests
             Assert.AreEqual(16, g.Score());
         }
 
+        [TestMethod]
+        public void TestOneStrike()
+        {
+            g.Roll(10);
+            g.Roll(3);
+            g.Roll(4);
+            RollMany(16, 0);
+            Assert.AreEqual(24, g.Score());
+        }
+
         private void RollMany(int n, int pins)
         {
             for (var i = 0; i < n; i++)
