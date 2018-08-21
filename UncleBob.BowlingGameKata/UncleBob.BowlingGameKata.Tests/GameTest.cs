@@ -8,16 +8,16 @@ namespace UncleBob.BowlingGameKata.Tests
     [TestClass]
     public class GameTest
     {
-        private static Game g;
+        private Game g;
 
-        [ClassInitialize]
-        public static void Initialize(TestContext context)
+        [TestInitialize]
+        public void Initialize()
         {
             g = new Game();
         }
 
-        [ClassCleanup]
-        public static void CleanUp()
+        [TestCleanup]
+        public void CleanUp()
         {
             g = null;
         }
