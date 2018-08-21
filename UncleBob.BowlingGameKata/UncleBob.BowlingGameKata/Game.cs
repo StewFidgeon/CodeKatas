@@ -19,21 +19,26 @@ namespace UncleBob.BowlingGameKata
         public int Score()
         {
             int _score = 0;
-            int i = 0;
+            int frameIndex = 0;
             for (var frame = 0; frame < 10; frame++)
             {
-                if (_rolls[i] + _rolls[i + 1] == 10) //spare
+                if (IsSpare(frameIndex))
                 {
-                    _score += 10 + _rolls[i + 2];
-                    i += 2;
+                    _score += 10 + _rolls[frameIndex + 2];
+                    frameIndex += 2;
                 }
                 else
                 {
-                    _score += _rolls[i] + _rolls[i + 1];
-                    i += 2;
+                    _score += _rolls[frameIndex] + _rolls[frameIndex + 1];
+                    frameIndex += 2;
                 }
             }
             return _score;
+        }
+
+        private bool IsSpare(int frameIndex)
+        {
+            return _rolls[frameIndex] + _rolls[frameIndex + 1] == 10;
         }
     }
 }
