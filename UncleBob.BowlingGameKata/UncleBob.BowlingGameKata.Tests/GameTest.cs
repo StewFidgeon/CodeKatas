@@ -12,6 +12,13 @@ namespace UncleBob.BowlingGameKata.Tests
         public void TestGutterGame()
         {
             var g = new Game();
+
+            for (var i = 0; i < 20; i++)
+            {
+                g.Roll(0);
+            }
+
+            Assert.AreEqual(0, g.Score());
         }
     }
 }
