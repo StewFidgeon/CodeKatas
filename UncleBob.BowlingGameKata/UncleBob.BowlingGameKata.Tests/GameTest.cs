@@ -50,7 +50,7 @@ namespace UncleBob.BowlingGameKata.Tests
         [TestMethod]
         public void TestOneStrike()
         {
-            g.Roll(10);
+            RollStrike();
             g.Roll(3);
             g.Roll(4);
             RollMany(16, 0);
@@ -69,6 +69,11 @@ namespace UncleBob.BowlingGameKata.Tests
         {
             g.Roll(5);
             g.Roll(5);
+        }
+
+        private void RollStrike()
+        {
+            g.Roll(10);
         }
     }
 }
