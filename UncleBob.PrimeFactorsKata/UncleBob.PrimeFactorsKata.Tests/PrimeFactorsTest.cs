@@ -40,6 +40,12 @@ namespace UncleBob.PrimeFactorsKata.Tests
             CollectionAssert.AreEqual(MakeList(3), _primeFactors.Generate(3));
         }
 
+        [TestMethod]
+        public void TestFour()
+        {
+            CollectionAssert.AreEqual(MakeList(2,2), _primeFactors.Generate(4));
+        }
+
         private List<int> MakeList(params int[] values)
         {
             var list = new List<int>();
