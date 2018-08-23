@@ -4,4 +4,4 @@
 http://butunclebob.com/files/downloads/Bowling%20Game%20Kata.ppt
 
 ## Prime Factors Kata
-http://butunclebob.com/ArticleS.UncleBob.ThePrimeFactorsKata
+http://butunclebob.com/files/downloads/Prime%20Factors%20Kata.ppt
