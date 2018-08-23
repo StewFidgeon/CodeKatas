@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2026
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UncleBob.PrimeFactorsKata", "UncleBob.PrimeFactorsKata\UncleBob.PrimeFactorsKata.csproj", "{612FDA44-88CA-4404-8FBF-8A1A07D0BC3B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UncleBob.PrimeFactorsKata.Tests", "UncleBob.PrimeFactorsKata.Tests\UncleBob.PrimeFactorsKata.Tests.csproj", "{BB24CFD3-465C-476E-AE3F-C6278A0A310F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{612FDA44-88CA-4404-8FBF-8A1A07D0BC3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{612FDA44-88CA-4404-8FBF-8A1A07D0BC3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{612FDA44-88CA-4404-8FBF-8A1A07D0BC3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{612FDA44-88CA-4404-8FBF-8A1A07D0BC3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB24CFD3-465C-476E-AE3F-C6278A0A310F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB24CFD3-465C-476E-AE3F-C6278A0A310F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB24CFD3-465C-476E-AE3F-C6278A0A310F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB24CFD3-465C-476E-AE3F-C6278A0A310F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {496599A2-9D76-43A3-8FAE-01032EFF989E}
+	EndGlobalSection
+EndGlobal
