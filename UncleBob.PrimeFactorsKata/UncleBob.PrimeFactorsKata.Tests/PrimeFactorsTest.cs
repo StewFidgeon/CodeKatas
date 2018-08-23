@@ -8,16 +8,30 @@ namespace UncleBob.PrimeFactorsKata.Tests
     [TestClass]
     public class PrimeFactorsTest
     {
+        private PrimeFactors _primeFactors;
+
+        [TestInitialize]
+        public void Initialize()
+        {
+            _primeFactors = new PrimeFactors();
+        }
+
+        [TestCleanup]
+        public void CleanUp()
+        {
+            _primeFactors = null;
+        }
+
         [TestMethod]
         public void TestOne()
         {
-            CollectionAssert.AreEqual(MakeList(), PrimeFactors.Generate(1));
+            CollectionAssert.AreEqual(MakeList(), _primeFactors.Generate(1));
         }
 
         [TestMethod]
         public void TestTwo()
         {
-            CollectionAssert.AreEqual(MakeList(2), PrimeFactors.Generate(2));
+            CollectionAssert.AreEqual(MakeList(2), _primeFactors.Generate(2));
         }
 
         private List<int> MakeList(params int[] values)

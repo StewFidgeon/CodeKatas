@@ -6,7 +6,7 @@ namespace UncleBob.PrimeFactorsKata
 {
     public class PrimeFactors
     {
-        public static List<int> Generate(int n)
+        public List<int> Generate(int n)
         {
             var primes = new List<int>();
             if (n > 1)
