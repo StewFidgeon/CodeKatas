@@ -11,7 +11,7 @@ namespace UncleBob.PrimeFactorsKata
             var primes = new List<int>();
             if (n > 1)
             {
-                primes.Add(2);
+                primes.Add(n);
             }
             return primes;
         }
