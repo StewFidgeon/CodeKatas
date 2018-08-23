@@ -8,7 +8,12 @@ namespace UncleBob.PrimeFactorsKata
     {
         public static List<int> Generate(int n)
         {
-            return new List<int>();
+            var primes = new List<int>();
+            if (n > 1)
+            {
+                primes.Add(2);
+            }
+            return primes;
         }
     }
 }
