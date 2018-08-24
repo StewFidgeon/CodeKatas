@@ -52,6 +52,12 @@ namespace UncleBob.PrimeFactorsKata.Tests
             CollectionAssert.AreEqual(MakeList(2, 3), _primeFactors.Generate(6));
         }
 
+        [TestMethod]
+        public void TestEight()
+        {
+            CollectionAssert.AreEqual(MakeList(2, 2, 2), _primeFactors.Generate(8));
+        }
+
         private List<int> MakeList(params int[] values)
         {
             var list = new List<int>();
