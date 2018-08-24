@@ -9,20 +9,12 @@ namespace UncleBob.PrimeFactorsKata
         public List<int> Generate(int n)
         {
             var primes = new List<int>();
-            int candidate = 2;
-            while (n > 1)
+            for (var candidate = 2; n > 1; candidate++)
             {
-                while (n % candidate == 0)
+                for (; n % candidate == 0; n/=candidate)
                 {
                     primes.Add(candidate);
-                    n /= candidate;
                 }
-
-                candidate++;
-            }
-            if (n > 1)
-            {
-                primes.Add(n);
             }
             return primes;
         }
