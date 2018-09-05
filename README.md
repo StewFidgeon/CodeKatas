@@ -1,6 +1,6 @@
 # My Repo for code kata exercises
 
-##Uncle Bob's Code Katas
+## Uncle Bob's Code Katas
 
 ### Bowling Ball Kata
 http://butunclebob.com/files/downloads/Bowling%20Game%20Kata.ppt
