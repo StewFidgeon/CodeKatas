@@ -8,7 +8,10 @@ namespace MarkSeemann.FizzBuzzKata
     {
         public string GetOutput()
         {
-            throw new NotImplementedException();
+            var result = string.Empty;
+            for (var i = 1; i <= 100; i++)
+                result = string.Format("{0}{1},", result, i);
+            return result.Substring(0, result.Length -1);
         }
     }
 }
