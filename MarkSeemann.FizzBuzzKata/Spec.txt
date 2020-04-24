@@ -1,0 +1,28 @@
+Fizz Buzz exercise
+------------------
+Originally a group game for children, it's been re-purposed as a programming interviewing question and is also quite good as a TDD learning exercise.
+
+It's relatively simple but also just a little bit tricky.
+
+Requirements:
+Write a program that prints the numbers from 1 to 100?
+For multiples of three print “Fizz” instead of the number?
+For multiples of five print “Buzz”?
+For numbers, which are multiples of both three and five print “FizzBuzz”
+
+Guidelines:
+Go back to fundamentals - perform all steps of Red ? Green ? Refactor cycle.
+Green - don't go straight to "Obvious implementation". Use "Fake it" or "Triangulation" - the simplest implementation that makes the tests pass.
+Refactor - Kent Beck's rules of simple design:
+Passes the tests
+Reveals intention
+No duplication
+Fewest elements
+
+Hints and tips:
+% is the modulo operator, which can be used to find the remainder when dividing a number. e.g. 5 % 2 == 0 (5 divided by 2 has remainder 0, i.e. 5 is divisible by 2).
+use a sub-function which returns the transformed Fizz Buzz number, e.g. FizzBuzz.Calculate(3) returns "Fizz"
+
+Extra challenge (new requirements):
+A number is fizz if it is divisible by 3 or if it has a 3 in it
+A number is buzz if it is divisible by 5 or if it has a 5 in it
