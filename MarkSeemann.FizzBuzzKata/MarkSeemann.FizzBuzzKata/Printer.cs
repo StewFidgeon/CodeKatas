@@ -18,9 +18,11 @@ namespace MarkSeemann.FizzBuzzKata
         {
             string adjusted;
             if (i % 3 == 0)
+            {
                 adjusted = "Fizz";
-            else if (i % 5 == 0)
-                adjusted = "Buzz";
+                if (i % 5 == 0)
+                    adjusted += "Buzz";
+            }
             else
                 adjusted = i.ToString();
             return string.Format("{0}{1},", result, adjusted);
