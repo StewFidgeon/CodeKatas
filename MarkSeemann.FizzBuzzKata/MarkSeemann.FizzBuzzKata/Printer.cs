@@ -10,8 +10,20 @@ namespace MarkSeemann.FizzBuzzKata
         {
             var result = string.Empty;
             for (var i = 1; i <= 100; i++)
-                result = string.Format("{0}{1},", result, i % 3 == 0 ? "Fizz" : i % 5 == 0 ? "Buzz" : i.ToString());
+                result = AdjustInteger(result, i);
             return result.Substring(0, result.Length -1);
+        }
+
+        private static string AdjustInteger(string result, int i)
+        {
+            string adjusted;
+            if (i % 3 == 0)
+                adjusted = "Fizz";
+            else if (i % 5 == 0)
+                adjusted = "Buzz";
+            else
+                adjusted = i.ToString();
+            return string.Format("{0}{1},", result, adjusted);
         }
     }
 }
