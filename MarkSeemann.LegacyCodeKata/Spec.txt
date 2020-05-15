@@ -1,0 +1,6 @@
+﻿Given the code above, do the following:
+
+Break the dependency on the Console
+Get the password comparison feature under test
+Get the password validation feature under test
+Add a feature to allow different encryption algorithms to be used
