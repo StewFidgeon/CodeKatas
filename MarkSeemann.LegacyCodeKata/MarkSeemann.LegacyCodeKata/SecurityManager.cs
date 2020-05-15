@@ -6,31 +6,35 @@ namespace MarkSeemann.LegacyCodeKata
 {
     public class SecurityManager
     {
-        public static void CreateUser()
+        private readonly IInputSource _input;
+        private readonly IOutputDestination _output;
+
+        public SecurityManager(IInputSource input, IOutputDestination output)
         {
-            Console.WriteLine("Enter a username");
-            var username = Console.ReadLine();
-            Console.WriteLine("Enter your full name");
-            var fullName = Console.ReadLine();
-            Console.WriteLine("Enter your password");
-            var password = Console.ReadLine();
-            Console.WriteLine("Re-enter your password");
-            var confirmPassword = Console.ReadLine();
+            _input = input;
+            _output = output;
+        }
+
+        public void CreateUser()
+        {
+            var username = _input.Username;
+            var fullName = _input.Fullname;
+            var password = _input.Password;
+            var confirmPassword = _input.PasswordConfirmation;
             if (password != confirmPassword)
             {
-                Console.WriteLine("The passwords don't match");
+                _output.Output("The passwords don't match");
                 return;
             }
             if (password.Length < 8)
             {
-                Console.WriteLine("Password must be at least 8 characters in length"
-                );
+                _output.Output("Password must be at least 8 characters in length");
                 return;
             }
             // Encrypt the password (just reverse it, should be secure)
             char[] array = password.ToCharArray();
             Array.Reverse(array);
-            Console.Write(String.Format("Saving Details for User ({0}, {1}, {2})\n",
+            _output.Output(String.Format("Saving Details for User ({0}, {1}, {2})\n",
             username,
             fullName,
             new string(array)));
