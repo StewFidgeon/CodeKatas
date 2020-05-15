@@ -17,12 +17,12 @@ namespace MarkSeemann.LegacyCodeKata.Tests
         public void GivenAValidInput_UserIsCreated()
         {
             var pipe = new DataPipeFake(new List<string> { _username, _name, _password, _confirmedPassword });
-
             var validator = new PasswordValidator();
-
             _expected.Add("Saving Details for User (username, user name, drowssap)\n");
+            var cypher = new Mock<ICypher>();
+            cypher.Setup(c => c.Encrypt(It.IsAny<string>())).Returns("drowssap");
 
-            var sm = new SecurityManager(pipe, validator);
+            var sm = new SecurityManager(pipe, validator, cypher.Object);
             sm.CreateUser();
 
             DoAssertions(pipe.Outputs, _expected);
@@ -33,12 +33,12 @@ namespace MarkSeemann.LegacyCodeKata.Tests
         {
             var wrong = "wrongpassword";
             var pipe = new DataPipeFake(new List<string> { _username, _name, _password, wrong });
-
             var validator = new PasswordValidator();
-
             _expected.Add("The passwords don't match");
+            var cypher = new Mock<ICypher>();
+            cypher.Setup(c => c.Encrypt(It.IsAny<string>())).Returns("drowssap");
 
-            var sm = new SecurityManager(pipe, validator);
+            var sm = new SecurityManager(pipe, validator, cypher.Object);
             sm.CreateUser();
 
             DoAssertions(pipe.Outputs, _expected);
@@ -48,13 +48,12 @@ namespace MarkSeemann.LegacyCodeKata.Tests
         public void GivenAnInvalidPasswordInput_UserIsNotCreated()
         {
             var shortPwd = "pass";
-            var pipe = new DataPipeFake(new List<string> { _username, _name, "pass", "pass" });
-
+            var pipe = new DataPipeFake(new List<string> { _username, _name, shortPwd, shortPwd });
             var validator = new PasswordValidator();
+            var cypher = new Mock<ICypher>();
+            cypher.Setup(c => c.Encrypt(It.IsAny<string>())).Returns("drowssap");
 
-            _expected.Add("Password must be at least 8 characters in length");
-
-            var sm = new SecurityManager(pipe, validator);
+            var sm = new SecurityManager(pipe, validator, cypher.Object);
             sm.CreateUser();
 
             DoAssertions(pipe.Outputs, _expected);
