@@ -19,9 +19,12 @@ namespace MarkSeemann.LegacyCodeKata.Tests
 
             var spy = new SpyOutputDestination();
 
+            var validator = new Mock<IPasswordValidator>();
+            validator.Setup(v => v.Ok(source.Object, spy)).Returns(true);
+
             var expected = new List<string> { "Saving Details for User (username, user name, drowssap)\n" };
 
-            var sm = new SecurityManager(source.Object, spy);
+            var sm = new SecurityManager(source.Object, spy, validator.Object);
             sm.CreateUser();
 
             DoAssertions(spy, expected);
@@ -41,7 +44,7 @@ namespace MarkSeemann.LegacyCodeKata.Tests
 
             var expected = new List<string> { "The passwords don't match" };
 
-            var sm = new SecurityManager(source.Object, spy);
+            var sm = new SecurityManager(source.Object, spy, new PasswordValidator());
             sm.CreateUser();
 
             DoAssertions(spy, expected);
@@ -61,7 +64,7 @@ namespace MarkSeemann.LegacyCodeKata.Tests
 
             var expected = new List<string> { "Password must be at least 8 characters in length" };
 
-            var sm = new SecurityManager(source.Object, spy);
+            var sm = new SecurityManager(source.Object, spy, new PasswordValidator());
             sm.CreateUser();
 
             DoAssertions(spy, expected);
