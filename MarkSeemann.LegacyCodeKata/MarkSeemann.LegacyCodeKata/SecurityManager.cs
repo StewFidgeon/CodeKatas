@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MarkSeemann.LegacyCodeKata
+﻿namespace MarkSeemann.LegacyCodeKata
 {
     public class SecurityManager
     {
@@ -30,9 +26,7 @@ namespace MarkSeemann.LegacyCodeKata
 
             if (!_validator.Ok(_pipe, password, confirmedPassword))
                 return;
-            //// Encrypt the password (just reverse it, should be secure)
-            //char[] array = password.ToCharArray();
-            //Array.Reverse(array);
+
             _pipe.WriteLine($"Saving Details for User ({username}, {fullName}, {_cypher.Encrypt(password)})\n");
         }
     }

@@ -8,7 +8,6 @@ namespace MarkSeemann.LegacyCodeKata
         {
             var sm = new SecurityManager(new ConsoleDatapipe(), new PasswordValidator(), new Cypher());
             sm.CreateUser();
-            Console.WriteLine();
             Console.ReadLine();
         }
     }

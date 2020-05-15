@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MarkSeemann.LegacyCodeKata
+﻿namespace MarkSeemann.LegacyCodeKata
 {
     public interface ICypher
     {
