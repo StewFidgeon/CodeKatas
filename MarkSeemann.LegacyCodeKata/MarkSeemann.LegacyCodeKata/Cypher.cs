@@ -2,7 +2,7 @@
 
 namespace MarkSeemann.LegacyCodeKata
 {
-    class Cypher : ICypher
+    public class Cypher : ICypher
     {
         public string Encrypt(string message)
         {

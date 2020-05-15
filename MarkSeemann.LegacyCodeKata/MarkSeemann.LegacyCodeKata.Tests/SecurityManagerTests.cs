@@ -1,4 +1,3 @@
-using Moq;
 using System.Collections.Generic;
 using Xunit;
 
@@ -18,10 +17,9 @@ namespace MarkSeemann.LegacyCodeKata.Tests
             var pipe = new DataPipeFake(new List<string> { _username, _name, _password, _confirmedPassword });
             var validator = new PasswordValidator();
             _expected.Add("Saving Details for User (username, user name, drowssap)\n");
-            var cypher = new Mock<ICypher>();
-            cypher.Setup(c => c.Encrypt(It.IsAny<string>())).Returns("drowssap");
+            var cypher = new Cypher();
 
-            var sm = new SecurityManager(pipe, validator, cypher.Object);
+            var sm = new SecurityManager(pipe, validator, cypher);
             sm.CreateUser();
 
             DoAssertions(pipe.Outputs, _expected);
@@ -34,10 +32,9 @@ namespace MarkSeemann.LegacyCodeKata.Tests
             var pipe = new DataPipeFake(new List<string> { _username, _name, _password, wrong });
             var validator = new PasswordValidator();
             _expected.Add("The passwords don't match");
-            var cypher = new Mock<ICypher>();
-            cypher.Setup(c => c.Encrypt(It.IsAny<string>())).Returns("drowssap");
+            var cypher = new Cypher();
 
-            var sm = new SecurityManager(pipe, validator, cypher.Object);
+            var sm = new SecurityManager(pipe, validator, cypher);
             sm.CreateUser();
 
             DoAssertions(pipe.Outputs, _expected);
@@ -50,10 +47,9 @@ namespace MarkSeemann.LegacyCodeKata.Tests
             var pipe = new DataPipeFake(new List<string> { _username, _name, shortPwd, shortPwd });
             var validator = new PasswordValidator();
             _expected.Add("Password must be at least 8 characters in length");
-            var cypher = new Mock<ICypher>();
-            cypher.Setup(c => c.Encrypt(It.IsAny<string>())).Returns("drowssap");
+            var cypher = new Cypher();
 
-            var sm = new SecurityManager(pipe, validator, cypher.Object);
+            var sm = new SecurityManager(pipe, validator, cypher);
             sm.CreateUser();
 
             DoAssertions(pipe.Outputs, _expected);
