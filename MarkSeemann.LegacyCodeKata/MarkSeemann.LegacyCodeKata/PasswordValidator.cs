@@ -6,19 +6,20 @@ namespace MarkSeemann.LegacyCodeKata
 {
     public class PasswordValidator : IPasswordValidator
     {
-        public bool Ok(IInputSource input, IOutputDestination output)
+        public bool Ok(IDataPipe pipe, string password, string confirmation)
         {
-            if (input.Password != input.PasswordConfirmation)
+            var success = true;
+            if (password != confirmation)
             {
-                output.Output("The passwords don't match");
-                return false;
+                pipe.WriteLine("The passwords don't match");
+                success = false;
             }
-            if (input.Password.Length < 8)
+            if (password.Length < 8)
             {
-                output.Output("Password must be at least 8 characters in length");
-                return false;
+                pipe.WriteLine("Password must be at least 8 characters in length");
+                success = false;
             }
-            return true;
+            return success;
         }
     }
 }

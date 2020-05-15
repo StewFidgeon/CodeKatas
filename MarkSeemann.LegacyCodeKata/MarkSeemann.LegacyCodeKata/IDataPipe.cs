@@ -4,8 +4,9 @@ using System.Text;
 
 namespace MarkSeemann.LegacyCodeKata
 {
-    public interface IPasswordValidator
+    public interface IDataPipe
     {
-        public bool Ok(IDataPipe pipe, string password, string confirmation);
+        public string Readline();
+        public void WriteLine(string message);
     }
 }

@@ -6,39 +6,32 @@ namespace MarkSeemann.LegacyCodeKata
 {
     public class SecurityManager
     {
-        private readonly IInputSource _input;
-        private readonly IOutputDestination _output;
+        private readonly IDataPipe _pipe;
         private readonly IPasswordValidator _validator;
 
-        public SecurityManager(IInputSource input, IOutputDestination output, IPasswordValidator validator)
+        public SecurityManager(IDataPipe pipe, IPasswordValidator validator)
         {
-            _input = input;
-            _output = output;
+            _pipe = pipe;
             _validator = validator;
         }
 
         public void CreateUser()
         {
-            var username = _input.Username;
-            var fullName = _input.Fullname;
-            var password = _input.Password;
-            var confirmPassword = _input.PasswordConfirmation;
-            //if (password != confirmPassword)
-            //{
-            //    _output.Output("The passwords don't match");
-            //    return;
-            //}
-            //if (password.Length < 8)
-            //{
-            //    _output.Output("Password must be at least 8 characters in length");
-            //    return;
-            //}
-            if (!_validator.Ok(_input, _output))
+            _pipe.WriteLine("Enter a username");
+            var username = _pipe.Readline();
+            _pipe.WriteLine("Enter your full name");
+            var fullName = _pipe.Readline();
+            _pipe.WriteLine("Enter your password");
+            var password = _pipe.Readline();
+            _pipe.WriteLine("Re-enter your password");
+            var confirmedPassword = _pipe.Readline();
+
+            if (!_validator.Ok(_pipe, password, confirmedPassword))
                 return;
             // Encrypt the password (just reverse it, should be secure)
             char[] array = password.ToCharArray();
             Array.Reverse(array);
-            _output.Output(String.Format("Saving Details for User ({0}, {1}, {2})\n",
+            _pipe.WriteLine(String.Format("Saving Details for User ({0}, {1}, {2})\n",
             username,
             fullName,
             new string(array)));

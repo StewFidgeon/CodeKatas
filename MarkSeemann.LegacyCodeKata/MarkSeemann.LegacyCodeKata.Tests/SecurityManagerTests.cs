@@ -7,74 +7,64 @@ namespace MarkSeemann.LegacyCodeKata.Tests
 {
     public class SecurityManagerTests
     {
+        private const string _username = "username";
+        private const string _name = "user name";
+        private const string _password = "password";
+        private const string _confirmedPassword = "password";
+        private List<string> _expected = new List<string> { "Enter a username", "Enter your full name", "Enter your password", "Re-enter your password" };
+
         [Fact]
         public void GivenAValidInput_UserIsCreated()
         {
-            var source = new Mock<IInputSource>();
-            source.Setup(s => s.GetInput());
-            source.Setup(s => s.Username).Returns("username");
-            source.Setup(s => s.Fullname).Returns("user name");
-            source.Setup(s => s.Password).Returns("password");
-            source.Setup(s => s.PasswordConfirmation).Returns("password");
+            var pipe = new DataPipeFake(new List<string> { _username, _name, _password, _confirmedPassword });
 
-            var spy = new SpyOutputDestination();
+            var validator = new PasswordValidator();
 
-            var validator = new Mock<IPasswordValidator>();
-            validator.Setup(v => v.Ok(source.Object, spy)).Returns(true);
+            _expected.Add("Saving Details for User (username, user name, drowssap)\n");
 
-            var expected = new List<string> { "Saving Details for User (username, user name, drowssap)\n" };
-
-            var sm = new SecurityManager(source.Object, spy, validator.Object);
+            var sm = new SecurityManager(pipe, validator);
             sm.CreateUser();
 
-            DoAssertions(spy, expected);
+            DoAssertions(pipe.Outputs, _expected);
         }
 
         [Fact]
         public void GivenAnUnconfirmedPasswordInput_UserIsNotCreated()
         {
-            var source = new Mock<IInputSource>();
-            source.Setup(s => s.GetInput());
-            source.Setup(s => s.Username).Returns("username");
-            source.Setup(s => s.Fullname).Returns("user name");
-            source.Setup(s => s.Password).Returns("password");
-            source.Setup(s => s.PasswordConfirmation).Returns("wrongpassword");
+            var wrong = "wrongpassword";
+            var pipe = new DataPipeFake(new List<string> { _username, _name, _password, wrong });
 
-            var spy = new SpyOutputDestination();
+            var validator = new PasswordValidator();
 
-            var expected = new List<string> { "The passwords don't match" };
+            _expected.Add("The passwords don't match");
 
-            var sm = new SecurityManager(source.Object, spy, new PasswordValidator());
+            var sm = new SecurityManager(pipe, validator);
             sm.CreateUser();
 
-            DoAssertions(spy, expected);
+            DoAssertions(pipe.Outputs, _expected);
         }
 
         [Fact]
         public void GivenAnInvalidPasswordInput_UserIsNotCreated()
         {
-            var source = new Mock<IInputSource>();
-            source.Setup(s => s.GetInput());
-            source.Setup(s => s.Username).Returns("username");
-            source.Setup(s => s.Fullname).Returns("user name");
-            source.Setup(s => s.Password).Returns("pass");
-            source.Setup(s => s.PasswordConfirmation).Returns("pass");
+            var shortPwd = "pass";
+            var pipe = new DataPipeFake(new List<string> { _username, _name, "pass", "pass" });
 
-            var spy = new SpyOutputDestination();
+            var validator = new PasswordValidator();
 
-            var expected = new List<string> { "Password must be at least 8 characters in length" };
+            _expected.Add("Password must be at least 8 characters in length");
 
-            var sm = new SecurityManager(source.Object, spy, new PasswordValidator());
+            var sm = new SecurityManager(pipe, validator);
             sm.CreateUser();
 
-            DoAssertions(spy, expected);
+            DoAssertions(pipe.Outputs, _expected);
         }
 
-        private void DoAssertions(SpyOutputDestination spy, List<string> expected)
+        private void DoAssertions(List<string> actual, List<string> expected)
         {
-            Assert.Equal(expected.Count, spy.Outputs.Count);
+            Assert.Equal(expected.Count, actual.Count);
             for (int i = 0; i < expected.Count; i++)
-                Assert.Equal(expected[i], spy.Outputs[i]);
+                Assert.Equal(expected[i], actual[i]);
         }
     }
 }
