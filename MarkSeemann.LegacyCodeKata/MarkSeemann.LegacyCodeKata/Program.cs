@@ -6,7 +6,10 @@ namespace MarkSeemann.LegacyCodeKata
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var sm = new SecurityManager(new ConsoleDatapipe(), new PasswordValidator(), new Cypher());
+            sm.CreateUser();
+            Console.WriteLine();
+            Console.ReadLine();
         }
     }
 }

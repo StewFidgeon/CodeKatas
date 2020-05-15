@@ -8,11 +8,13 @@ namespace MarkSeemann.LegacyCodeKata
     {
         private readonly IDataPipe _pipe;
         private readonly IPasswordValidator _validator;
+        private readonly ICypher _cypher;
 
-        public SecurityManager(IDataPipe pipe, IPasswordValidator validator)
+        public SecurityManager(IDataPipe pipe, IPasswordValidator validator, ICypher cypher)
         {
             _pipe = pipe;
             _validator = validator;
+            _cypher = cypher;
         }
 
         public void CreateUser()
@@ -28,13 +30,10 @@ namespace MarkSeemann.LegacyCodeKata
 
             if (!_validator.Ok(_pipe, password, confirmedPassword))
                 return;
-            // Encrypt the password (just reverse it, should be secure)
-            char[] array = password.ToCharArray();
-            Array.Reverse(array);
-            _pipe.WriteLine(String.Format("Saving Details for User ({0}, {1}, {2})\n",
-            username,
-            fullName,
-            new string(array)));
+            //// Encrypt the password (just reverse it, should be secure)
+            //char[] array = password.ToCharArray();
+            //Array.Reverse(array);
+            _pipe.WriteLine($"Saving Details for User ({username}, {fullName}, {_cypher.Encrypt(password)})\n");
         }
     }
 }

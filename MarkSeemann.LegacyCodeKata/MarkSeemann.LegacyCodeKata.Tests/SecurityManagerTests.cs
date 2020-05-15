@@ -50,6 +50,7 @@ namespace MarkSeemann.LegacyCodeKata.Tests
             var shortPwd = "pass";
             var pipe = new DataPipeFake(new List<string> { _username, _name, shortPwd, shortPwd });
             var validator = new PasswordValidator();
+            _expected.Add("Password must be at least 8 characters in length");
             var cypher = new Mock<ICypher>();
             cypher.Setup(c => c.Encrypt(It.IsAny<string>())).Returns("drowssap");
 
