@@ -18,11 +18,10 @@ namespace Ploeh.Samples.BookingApi.UnitTests
             var validator = new Mock<IValidator>();
             validator.Setup(v => v.Validate(dto)).Returns(It.IsAny<string>());
 
-            var mapper = new Mock<IMapper>();
-            mapper.Setup(map => map.Map(dto)).Returns(new Reservation());
+            Mock<IMapper> mapper = GetMapper(dto);
 
             var maîtreD = new Mock<IMaîtreD>();
-            maîtreD.Setup(maî => maî.TryAccept(new Reservation()));
+            maîtreD.Setup(maî => maî.TryAccept(It.IsAny<Reservation>()));
             ReservationsController sut = new ReservationsController(validator.Object, mapper.Object, maîtreD.Object);
 
             //Act
@@ -30,7 +29,6 @@ namespace Ploeh.Samples.BookingApi.UnitTests
 
             //Assert
             var br = Assert.IsAssignableFrom<BadRequestObjectResult>(actual);
-
             var expected = sut.Response;
             Assert.Equal(expected, br.Value);
         }
@@ -42,11 +40,8 @@ namespace Ploeh.Samples.BookingApi.UnitTests
             var expected = 1;
             var dto = new ReservationDto { Quantity = 10 };
 
-            var validator = new Mock<IValidator>();
-            validator.Setup(v => v.Validate(dto)).Returns(string.Empty);
-
-            var mapper = new Mock<IMapper>();
-            mapper.Setup(map => map.Map(dto)).Returns(It.IsAny<Reservation>());
+            Mock<IValidator> validator = GetValidator(dto);
+            Mock<IMapper> mapper = GetMapper(dto);
 
             var md = new Mock<IMaîtreD>();
             md.Setup(m => m.TryAccept(It.IsAny<Reservation>())).Returns(expected);
@@ -66,11 +61,8 @@ namespace Ploeh.Samples.BookingApi.UnitTests
             //Arrange
             var dto = new ReservationDto { Date = "01/01/1970" };
 
-            var validator = new Mock<IValidator>();
-            validator.Setup(v => v.Validate(dto)).Returns(string.Empty);
-
-            var mapper = new Mock<IMapper>();
-            mapper.Setup(map => map.Map(dto)).Returns(It.IsAny<Reservation>());
+            Mock<IValidator> validator = GetValidator(dto);
+            Mock<IMapper> mapper = GetMapper(dto);
 
             var md = new Mock<IMaîtreD>();
             md.Setup(m => m.TryAccept(It.IsAny<Reservation>())).Returns((int?)null);
@@ -83,6 +75,20 @@ namespace Ploeh.Samples.BookingApi.UnitTests
             var c = Assert.IsAssignableFrom<ObjectResult>(actual);
             var expected = 500;
             Assert.Equal(expected, c.StatusCode);
+        }
+
+        private static Mock<IMapper> GetMapper(ReservationDto dto)
+        {
+            var mapper = new Mock<IMapper>();
+            mapper.Setup(map => map.Map(dto)).Returns(It.IsAny<Reservation>());
+            return mapper;
+        }
+
+        private static Mock<IValidator> GetValidator(ReservationDto dto)
+        {
+            var validator = new Mock<IValidator>();
+            validator.Setup(v => v.Validate(dto)).Returns(string.Empty);
+            return validator;
         }
     }
 }
