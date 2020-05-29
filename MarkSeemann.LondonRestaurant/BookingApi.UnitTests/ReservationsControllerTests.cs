@@ -13,46 +13,76 @@ namespace Ploeh.Samples.BookingApi.UnitTests
         [Fact]
         public void PostInvalidDto()
         {
-            // properly initialize `dto` here:
-            ReservationDto dto = null;
-            // properly initialise `sut` here:
-            ReservationsController sut = null;
+            //Arrange
+            ReservationDto dto = new ReservationDto();
+            var validator = new Mock<IValidator>();
+            validator.Setup(v => v.Validate(dto)).Returns(It.IsAny<string>());
 
+            var mapper = new Mock<IMapper>();
+            mapper.Setup(map => map.Map(dto)).Returns(new Reservation());
+
+            var maîtreD = new Mock<IMaîtreD>();
+            maîtreD.Setup(maî => maî.TryAccept(new Reservation()));
+            ReservationsController sut = new ReservationsController(validator.Object, mapper.Object, maîtreD.Object);
+
+            //Act
             var actual = sut.Post(dto);
 
+            //Assert
             var br = Assert.IsAssignableFrom<BadRequestObjectResult>(actual);
-            // Uncomment and assign a proper value to `expected`:
-            //Assert.Equal(expected, br.Value);
+
+            var expected = sut.Response;
+            Assert.Equal(expected, br.Value);
         }
 
         [Fact]
         public void PostValidDtoWhenEnoughCapacityExists()
         {
-            // properly initialize `dto` here:
-            ReservationDto dto = null;
-            // properly initialise `sut` here:
-            ReservationsController sut = null;
+            //Arrange
+            var expected = 1;
+            var dto = new ReservationDto { Quantity = 10 };
 
+            var validator = new Mock<IValidator>();
+            validator.Setup(v => v.Validate(dto)).Returns(string.Empty);
+
+            var mapper = new Mock<IMapper>();
+            mapper.Setup(map => map.Map(dto)).Returns(It.IsAny<Reservation>());
+
+            var md = new Mock<IMaîtreD>();
+            md.Setup(m => m.TryAccept(It.IsAny<Reservation>())).Returns(expected);
+            ReservationsController sut = new ReservationsController(validator.Object, mapper.Object, md.Object);
+
+            //Act
             var actual = sut.Post(dto);
 
+            //Assert
             var ok = Assert.IsAssignableFrom<OkObjectResult>(actual);
-            // Uncomment and assign a proper value to `expected`:
-            //Assert.Equal(expected, ok.Value);
+            Assert.Equal(expected, ok.Value);
         }
 
         [Fact]
         public void PostValidDtoWhenSoldOut()
         {
-            // properly initialize `dto` here:
-            ReservationDto dto = null;
-            // properly initialise `sut` here:
-            ReservationsController sut = null;
+            //Arrange
+            var dto = new ReservationDto { Date = "01/01/1970" };
 
+            var validator = new Mock<IValidator>();
+            validator.Setup(v => v.Validate(dto)).Returns(string.Empty);
+
+            var mapper = new Mock<IMapper>();
+            mapper.Setup(map => map.Map(dto)).Returns(It.IsAny<Reservation>());
+
+            var md = new Mock<IMaîtreD>();
+            md.Setup(m => m.TryAccept(It.IsAny<Reservation>())).Returns((int?)null);
+            ReservationsController sut = new ReservationsController(validator.Object, mapper.Object, md.Object);
+
+            //Act
             var actual = sut.Post(dto);
 
+            //Assert
             var c = Assert.IsAssignableFrom<ObjectResult>(actual);
-            // Uncomment and assign a proper value to `expected`:
-            //Assert.Equal(expected, c.StatusCode);
+            var expected = 500;
+            Assert.Equal(expected, c.StatusCode);
         }
     }
 }
